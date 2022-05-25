@@ -9,6 +9,9 @@ import { isProd } from "./config";
 
 import ErrorCodes from "./constants/errors";
 
+import userRouter from "./api/routes/user";
+import managerRouter from "./api/routes/manager";
+
 const app = express();
 
 // Body Parser
@@ -56,6 +59,8 @@ app.get("/", (_req, res) => {
   return res.send("Hello world");
 });
 
+app.use("/user", userRouter);
+app.use("/manager",managerRouter);
 // Custom error handling middleware for returning errors in custom form:
 // {
 // 	code: ErrorCode,

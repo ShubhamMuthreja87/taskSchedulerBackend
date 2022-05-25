@@ -24,6 +24,10 @@ const ErrorCodes = {
 		code: "A5",
 		message: "Phone No already exists",
 	},
+	A6:{
+		code:"A^",
+		message :"Invalid Access Token"
+	},
 	U1: {
 		code: "U1",
 		message: "Internal Server Error",
