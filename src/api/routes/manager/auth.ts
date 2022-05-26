@@ -10,7 +10,6 @@ import Manager from "../../../models/Manager";
 import { validatePhoneNoLength } from "../../../utils/validators";
 import isUserAuth from "../../middlewares/isUserAuth";
 
-
 const managerAuthRouter = Router();
 
 managerAuthRouter.get("/currentUser", isUserAuth, async (req, res) => {
@@ -23,6 +22,19 @@ managerAuthRouter.get("/currentUser", isUserAuth, async (req, res) => {
     code: "00",
     ...user,
   });
+});
+
+managerAuthRouter.get("/managerList", isUserAuth, async (req, res) => {
+  req;
+  try {
+		const managers = await Manager.find();
+		return res.send({
+			code: "00",
+			managers,
+		});
+	} catch (err) {
+		return res.status(500).send(ErrorCodes.U1);
+	}
 });
 
 //signup
@@ -40,12 +52,7 @@ managerAuthRouter.post(
     { abortEarly: false, allowUnknown: false }
   ),
   async (req, res) => {
-    const {
-      name,
-      email,
-      password,
-      phoneNo,
-    } = req.body;
+    const { name, email, password, phoneNo } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const emailExists = await Manager.findOne({
@@ -60,7 +67,6 @@ managerAuthRouter.post(
 
     if (phoneNoExists) return res.status(409).send(ErrorCodes.A5);
 
-
     const manager = await Manager.create({
       email,
       name,
@@ -74,7 +80,7 @@ managerAuthRouter.post(
         phoneNo: manager.phoneNo,
         email,
         name: manager.name,
-        userType: manager.userType
+        userType: manager.userType,
       },
       SECRET_KEY,
       { expiresIn: "8 hours" }
@@ -85,11 +91,10 @@ managerAuthRouter.post(
     return res.send({
       code: "00",
       user: {
-        id:manager._id,
+        id: manager._id,
         email: manager.email,
         phoneNo: manager.phoneNo,
         name: manager.name,
-        
       },
     });
   }
@@ -113,7 +118,7 @@ managerAuthRouter.post(
       email: email,
     });
 
-    if (!manager){
+    if (!manager) {
       return res.status(401).send(ErrorCodes.A2);
     }
     const isCorrect = await bcrypt.compare(password, manager.password);
@@ -125,7 +130,7 @@ managerAuthRouter.post(
         phoneNo: manager.phoneNo,
         email,
         name: manager.name,
-        userType: manager.userType
+        userType: manager.userType,
       },
       SECRET_KEY,
       { expiresIn: "8 hours" }
@@ -136,11 +141,11 @@ managerAuthRouter.post(
     return res.send({
       code: "00",
       user: {
-        id:manager._id,
+        id: manager._id,
         email: manager.email,
         phoneNo: manager.phoneNo,
         name: manager.name,
-        userType :manager.userType,
+        userType: manager.userType,
       },
     });
   }
@@ -153,7 +158,5 @@ managerAuthRouter.get("/logout", (_req, res) => {
     code: "00",
   });
 });
-
-
 
 export default managerAuthRouter;

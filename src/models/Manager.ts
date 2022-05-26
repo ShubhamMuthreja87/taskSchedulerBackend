@@ -27,6 +27,7 @@ const manager = new mongoose.Schema({
 
   password: {
     type: String,
+    required: true,
   },
 
   userType:String

@@ -10,6 +10,7 @@ const main = async () => {
 	try {
 		// Database Connection
 		dbConnect();
+		console.log(Date())
 		console.log("[⚡] Connected to Database");
 	} catch (err) {
 		console.error("[❌] Failed to connect to Database.");
