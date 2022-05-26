@@ -61,6 +61,7 @@ app.get("/", (_req, res) => {
 
 app.use("/user", userRouter);
 app.use("/manager",managerRouter);
+
 // Custom error handling middleware for returning errors in custom form:
 // {
 // 	code: ErrorCode,

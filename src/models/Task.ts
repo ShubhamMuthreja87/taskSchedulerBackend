@@ -10,6 +10,7 @@ export interface ITask {
   length: number;
   week: number;
   done: boolean;
+  active : boolean
   forwardedTimes: number;
 }
 
@@ -46,6 +47,9 @@ const task = new mongoose.Schema({
     type: Number,
   },
   done: {
+    type: Boolean
+  },
+  active: {
     type: Boolean
   },
   forwardedTimes: {

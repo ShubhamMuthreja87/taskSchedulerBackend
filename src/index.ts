@@ -4,6 +4,7 @@ import { PORT } from "./config";
 import { dbConnect } from "./utils/database";
 
 import app from "./app";
+import { scheduleJob } from "./service/taskAllocator";
 
 
 const main = async () => {
@@ -16,6 +17,7 @@ const main = async () => {
 		console.error("[❌] Failed to connect to Database.");
 	}
 
+	scheduleJob();
 
 	app.listen(PORT, () => {
 		console.log(

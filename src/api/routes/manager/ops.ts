@@ -53,6 +53,7 @@ managerOpsRouter.post(
               length,
               week: weekNum ,
               done: false,
+              active :true,
               forwardedTimes: 0,
             });
         
