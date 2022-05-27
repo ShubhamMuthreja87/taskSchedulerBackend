@@ -24,10 +24,11 @@ managerAuthRouter.get("/currentUser", isUserAuth, async (req, res) => {
   });
 });
 
-managerAuthRouter.get("/managerList", isUserAuth, async (req, res) => {
+managerAuthRouter.get("/managerList", async (req, res) => {
   req;
   try {
 		const managers = await Manager.find();
+    res.status(200);
 		return res.send({
 			code: "00",
 			managers,

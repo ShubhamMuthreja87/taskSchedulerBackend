@@ -174,4 +174,30 @@ async (req, res) => {
   }
 });
 
+
+managerOpsRouter.post(
+  "/taskByManagerId",
+  isUserAuth,
+  celebrate(
+    {
+      body: Joi.object({
+        managerId: Joi.string().required(),
+      }),
+    },
+    { abortEarly: false, allowUnknown: false }
+  ),
+  async (req, res) => {
+    const { managerId } = req.body;
+    try {
+      const tasks = await Task.find({ managerId });
+      return res.send({
+        code: "00",
+        tasks,
+      });
+    } catch (err) {
+      return res.status(500).send(ErrorCodes.U1);
+    }
+  }
+);
+
 export default managerOpsRouter;
